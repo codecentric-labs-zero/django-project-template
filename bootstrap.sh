@@ -8,6 +8,7 @@ if [ ! -d .git ]; then
     echo "Initializing git repository"
     git init
 fi
+PROJECT_NAME={{ project_name | lower }}
 APP_NAME=cclz-{{ project_name | lower }}
 PROD_APP_NAME="$APP_NAME-prod"
 PIPELINE_NAME="$APP_NAME-pipeline"
@@ -35,11 +36,11 @@ heroku pipelines:create $PIPELINE_NAME --app $PROD_APP_NAME --stage production
 echo "Adding $APP_NAME to $PIPELINE_NAME staging stage"
 heroku pipelines:add $PIPELINE_NAME --app $APP_NAME --stage staging
 echo "Creating GitHub repo"
-curl -X POST -d '{"name": "'"$APP_NAME"'", "private": false, "team_id": "2073794"}' -H "Authorization: token $GITHUB_TOKEN" -i https://api.github.com/orgs/codecentric-labs-zero/repos
+curl -X POST -d '{"name": "'"$PROJECT_NAME"'", "private": false, "team_id": "2073794"}' -H "Authorization: token $GITHUB_TOKEN" -i https://api.github.com/orgs/codecentric-labs-zero/repos
 echo "Adding repo to CircleCI"
-curl -X POST 'https://circleci.com/api/v1.1/project/github/codecentric-labs-zero/$APP_NAME/follow?circle-token=$CIRCLE_TOKEN'
+curl -X POST 'https://circleci.com/api/v1.1/project/github/codecentric-labs-zero/$PROJECT_NAME/follow?circle-token=$CIRCLE_TOKEN'
 echo "Adding origin remote to local repo"
-git remote add origin git@github.com:codecentric-labs-zero/$APP_NAME.git
+git remote add origin git@github.com:codecentric-labs-zero/$PROJECT_NAME.git
 echo "Pushing initial version"
 git add .
 git commit -am "Initial project setup"
