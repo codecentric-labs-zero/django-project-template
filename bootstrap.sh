@@ -65,14 +65,11 @@ echo "Adding origin remote to local repository"
 git remote add origin git@github.com:codecentric-labs-zero/$PROJECT_NAME.git >/dev/null
 echo "Writing new README.md"
 echo "# testproject" > README.md
-echo "[![CircleCI](https://circleci.com/gh/codecentric-labs-zero/$PROJECT_NAME.svg?style=svg)](https://circleci.com/gh/codecentric-labs-zero/$PROJECT_NAME)" >> README.md
 echo "## Links" >> README.md
 echo "[Heroku Dashboard](https://dashboard.heroku.com/apps/$APP_NAME)" >> README.md
 echo "[Staging environment](https://$APP_NAME.herokuapp.com)" >> README.md
 echo "[Production environment](https://$PROD_APP_NAME.herokuapp.com)" >> README.md
 echo "Pushing initial project setup"
-echo "Switching to develop branch"
-git checkout -b develop
 echo "Pushing initial project setup"
 git add .
 git commit -am "Initial project setup"
