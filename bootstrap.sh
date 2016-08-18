@@ -70,8 +70,12 @@ echo "# testproject" > README.md
 echo "[![CircleCI](https://circleci.com/gh/codecentric-labs-zero/$PROJECT_NAME.svg?style=svg)](https://circleci.com/gh/codecentric-labs-zero/$PROJECT_NAME)" >> README.md
 echo "## Links" >> README.md
 echo "* [Heroku Dashboard](https://dashboard.heroku.com/apps/$APP_NAME)" >> README.md
-echo "* [Staging environment](https://$APP_NAME.herokuapp.com)" >> README.md
-echo "* [Production environment](https://$PROD_APP_NAME.herokuapp.com)" >> README.md
+echo "* [Staging environment (web application)](https://$APP_NAME.herokuapp.com/web)" >> README.md
+echo "* [Staging environment (API)](https://$APP_NAME.herokuapp.com/api/hello_world)" >> README.md
+echo "* [Staging environment (admin UI)](https://$APP_NAME.herokuapp.com/admin)" >> README.md
+echo "* [Production environment (web application)](https://$PROD_APP_NAME.herokuapp.com/web)" >> README.md
+echo "* [Production environment (API)](https://$PROD_APP_NAME.herokuapp.com/api/hello_world)" >> README.md
+echo "* [Production environment (admin UI)](https://$PROD_APP_NAME.herokuapp.com/admin)" >> README.md
 echo "Removing bootstrap.sh"
 rm bootstrap.sh >/dev/null
 echo "Pushing initial project setup"
