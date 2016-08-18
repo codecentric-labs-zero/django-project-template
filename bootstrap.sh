@@ -43,10 +43,10 @@ heroku pipelines:add $PIPELINE_NAME --app $APP_NAME --stage staging
 echo "=== Done setting up Heroku ==="
 echo "=== Setting up GitHub and CircleCI ==="
 echo "Creating repository"
-curl -X POST -d '{"name": "'"$PROJECT_NAME"'", "private": false, "team_id": "2073794"}' -H "Authorization: token $GITHUB_TOKEN" -i https://api.github.com/orgs/codecentric-labs-zero/repos >/dev/null
+curl -sS -X POST -d '{"name": "'"$PROJECT_NAME"'", "private": false, "team_id": "2073794"}' -H "Authorization: token $GITHUB_TOKEN" -i https://api.github.com/orgs/codecentric-labs-zero/repos >/dev/null
 sleep 15s
 echo "Adding repository to CircleCI"
-curl -X POST "https://circleci.com/api/v1.1/project/github/codecentric-labs-zero/$PROJECT_NAME/follow?circle-token=$CIRCLE_TOKEN" >/dev/null
+curl -sS -X POST "https://circleci.com/api/v1.1/project/github/codecentric-labs-zero/$PROJECT_NAME/follow?circle-token=$CIRCLE_TOKEN" >/dev/null
 echo "Creating new SSH key"
 ssh-keygen -t rsa -b 4096 -C "cc-labs-zero@codecentric.de" -N "" -f $TMPDIR$PROJECT_NAME-key >/dev/null
 PRIVATE_KEY="`cat $TMPDIR$PROJECT_NAME-key`"
@@ -54,11 +54,11 @@ PUBLIC_KEY="`cat $TMPDIR$PROJECT_NAME-key.pub`"
 rm $TMPDIR$PROJECT_NAME-key >/dev/null
 rm $TMPDIR$PROJECT_NAME-key.pub >/dev/null
 echo "Adding SSH key to CircleCI"
-curl -X POST --header "Content-Type: application/json" -d '{"hostname":"github.com", "private_key":"'"$PRIVATE_KEY"'"}' "https://circleci.com/api/v1.1/project/github/codecentric-labs-zero/$PROJECT_NAME/ssh-key?circle-token=$CIRCLE_TOKEN" >/dev/null
+curl -sS -X POST --header "Content-Type: application/json" -d '{"hostname":"github.com", "private_key":"'"$PRIVATE_KEY"'"}' "https://circleci.com/api/v1.1/project/github/codecentric-labs-zero/$PROJECT_NAME/ssh-key?circle-token=$CIRCLE_TOKEN" >/dev/null
 echo "Adding SSH key to GitHub"
-curl -X POST -d '{"key": "'"$PUBLIC_KEY"'", "title": "CircleCI write access", "read_only": false }' -H "Authorization: token $GITHUB_TOKEN" -i https://api.github.com/repos/codecentric-labs-zero/$PROJECT_NAME/keys >/dev/null
+curl -sS -X POST -d '{"key": "'"$PUBLIC_KEY"'", "title": "CircleCI write access", "read_only": false }' -H "Authorization: token $GITHUB_TOKEN" -i https://api.github.com/repos/codecentric-labs-zero/$PROJECT_NAME/keys >/dev/null
 echo "Adding Heroku API key to CircleCI"
-curl --data "apikey=`heroku auth:token`" "https://circleci.com/api/v1.1/user/heroku-key?circle-token=$CIRCLE_TOKEN" >/dev/null
+curl -sS --data "apikey=`heroku auth:token`" "https://circleci.com/api/v1.1/user/heroku-key?circle-token=$CIRCLE_TOKEN" >/dev/null
 echo "================================================================================================================================"
 echo "You need to manually associate a Heroku SSH key with your CircleCI account."
 echo "Please visit https://circleci.com/gh/codecentric-labs-zero/$PROJECT_NAME/edit#heroku and follow the instructions given in Step 2."
