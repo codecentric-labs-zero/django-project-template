@@ -1,0 +1,37 @@
+machine:
+  python:
+    version: 3.5.0
+
+test:
+  override:
+    - py.test
+
+general:
+  branches:
+    only:
+      - master
+      - develop
+      - /feature-.*/
+
+checkout:
+  post:
+    - ./merge-base-ff.sh
+
+deployment:
+  automerge:
+    branch: develop
+    commands:
+      - git config user.email "cc-labs-zero@codecentric.de"
+      - git config user.name "$CIRCLE_USERNAME"
+      - git fetch origin master:master
+      - git checkout master
+      - git merge $CIRCLE_SHA1 --no-edit
+      - git tag -a -m "Released by CircleCI build number $CIRCLE_BUILD_NUM ($CIRCLE_BUILD_URL)" rc-$CIRCLE_BUILD_NUM
+      - git push origin rc-$CIRCLE_BUILD_NUM
+      - git push origin master
+  staging:
+    branch: master
+    commands:
+      - git push git@heroku.com:cclz-{{ project_name | lower }}.git $CIRCLE_SHA1:refs/heads/master
+      - heroku pg:backups capture --app cclz-{{ project_name | lower }}
+      - heroku run --app cclz-{{ project_name | lower }} python manage.py migrate --no-input
