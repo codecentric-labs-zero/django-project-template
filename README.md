@@ -10,23 +10,13 @@ $ django-admin.py startproject [project_name] \
   --extension py,md,txt,sh,ini,yml
 ```
 
-If necessary, make scripts executable:
+If necessary, make script executable:
 
 ```
-$ chmod u+x manage.py
-$ chmod u+x merge-base-ff.sh
 $ chmod u+x bootstrap.sh
 ```
 
-Install requirements and run migrations:
-
-```
-$ pip install -r requirements.txt
-$ ./manage.py migrate
-```
-
-If you want to create a continuous delivery pipeline and Heroku apps, you can
-run the bootstrap script:
+Create continuous delivery pipeline and Heroku apps:
 
 ```
 $ export GITHUB_TOKEN=[your github token]
@@ -35,5 +25,5 @@ $ heroku login
 $ ./bootstrap.sh
 ```
 
-Please note that this must only be done once and that you'll need to be part
+Please note that this can only be done once and that you'll need to be part
 of the codecentric-labs-zero organizations on Heroku and GitHub for this to work.
