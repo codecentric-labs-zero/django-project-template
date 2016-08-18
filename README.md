@@ -27,3 +27,18 @@ $ ./bootstrap.sh
 
 Please note that this can only be done once and that you'll need to be part
 of the codecentric-labs-zero organizations on Heroku and GitHub for this to work.
+
+If you prefer not to set up the delivery pipeline, you can simply prepare the
+project for development:
+
+```
+$ chmod u+x manage.py
+$ chmod u+x merge-base-ff.sh
+$ rm bootstrap.sh
+$ echo "# [project name]" > README.md
+$ pip install -r requirements.txt
+$ ./manage.py migrate
+$ py.test
+$ git init
+$ git commit -am "Initial project setup"
+```
