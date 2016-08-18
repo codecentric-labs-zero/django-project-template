@@ -114,7 +114,7 @@ class Development(Common):
     ALLOWED_HOSTS = []
 
 class Staging(Common):
-    pass
+    ALLOWED_HOSTS = ['cclz-{{ project_name }}.herokuapp.com']
 
 class Production(Staging):
-    pass
+    ALLOWED_HOSTS = ['cclz-{{ project_name }}-prod.herokuapp.com']
