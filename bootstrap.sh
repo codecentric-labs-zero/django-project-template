@@ -53,6 +53,16 @@ curl -X POST -d '{"name": "'"$PROJECT_NAME"'", "private": false, "team_id": "207
 sleep 15s
 echo "Adding repo to CircleCI"
 curl -X POST "https://circleci.com/api/v1.1/project/github/codecentric-labs-zero/$PROJECT_NAME/follow?circle-token=$CIRCLE_TOKEN"
+echo "Creating new SSH key"
+ssh-keygen -t rsa -b 4096 -C "cc-labs-zero@codecentric.de" -N "" -f $TMPDIR$PROJECT_NAME-key
+PRIVATE_KEY="`cat $TMPDIR$PROJECT_NAME-key`"
+PUBLIC_KEY="`cat $TMPDIR$PROJECT_NAME-key.pub`"
+rm $TMPDIR$PROJECT_NAME-key
+rm $TMPDIR$PROJECT_NAME-key.pub
+echo "Adding SSH key to CircleCI"
+curl -X POST --header "Content-Type: application/json" -d '{"hostname":"github.com", "private_key":"'"$PRIVATE_KEY"'"}' "https://circleci.com/api/v1.1/project/github/codecentric-labs-zero/$PROJECT_NAME/ssh-key?circle-token=$CIRCLE_TOKEN"
+echo "Adding SSH key to GitHub"
+curl -X POST -d '{"key": "'"$PUBLIC_KEY"'", "title": "CircleCI write access", "read_only": false }' -H "Authorization: token $GITHUB_TOKEN" -i https://api.github.com/repos/codecentric-labs-zero/$PROJECT_NAME/keys
 echo "Adding origin remote to local repo"
 git remote add origin git@github.com:codecentric-labs-zero/$PROJECT_NAME.git
 echo "Pushing initial version"
