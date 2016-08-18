@@ -25,6 +25,7 @@ class Common(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'django_extensions',
         '{{ project_name }}_api',
         '{{ project_name }}_web'
     ]
