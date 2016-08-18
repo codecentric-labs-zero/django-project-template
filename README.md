@@ -29,9 +29,11 @@ If you want to create a continuous delivery pipeline and Heroku apps, you can
 run the bootstrap script:
 
 ```
+$ export GITHUB_TOKEN=[your github token]
+$ export CIRCLE_TOKEN=[your circle token]
 $ heroku login
 $ ./bootstrap.sh
 ```
 
 Please note that this must only be done once and that you'll need to be part
-of the codecentric-labs-zero organization for this to work.
+of the codecentric-labs-zero organizations on Heroku and GitHub for this to work.

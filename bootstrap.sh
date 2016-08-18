@@ -34,4 +34,14 @@ echo "Adding $PROD_APP_NAME to $PIPELINE_NAME production stage"
 heroku pipelines:create $PIPELINE_NAME --app $PROD_APP_NAME --stage production
 echo "Adding $APP_NAME to $PIPELINE_NAME staging stage"
 heroku pipelines:add $PIPELINE_NAME --app $APP_NAME --stage staging
+echo "Creating GitHub repo"
+curl -X POST -d '{"name": "'"$APP_NAME"'", "private": false, "team_id": "2073794"}' -H "Authorization: token $GITHUB_TOKEN" -i https://api.github.com/orgs/codecentric-labs-zero/repos
+echo "Adding repo to CircleCI"
+curl -X POST 'https://circleci.com/api/v1.1/project/github/codecentric-labs-zero/$APP_NAME/follow?circle-token=$CIRCLE_TOKEN'
+echo "Adding origin remote to local repo"
+git remote add origin git@github.com:codecentric-labs-zero/$APP_NAME.git
+echo "Pushing initial version"
+git add .
+git commit -am "Initial project setup"
+git push -u origin master
 echo "Done"
