@@ -30,12 +30,14 @@ heroku create $APP_NAME --org codecentric-labs-zero --remote staging --region eu
 heroku buildpacks:add https://github.com/heroku/heroku-buildpack-python.git --app $APP_NAME
 heroku config:set ENVIRONMENT=STAGING --app $APP_NAME
 heroku config:set DJANGO_SECRET_KEY=`./manage.py generate_secret_key` --app $APP_NAME
+heroku addons:create papertrail:choklad --app $APP_NAME
 heroku addons:create heroku-postgresql:hobby-dev --app $APP_NAME
 heroku pg:wait --app $APP_NAME
 heroku create $PROD_APP_NAME --org codecentric-labs-zero --remote staging --region eu
 heroku buildpacks:add https://github.com/heroku/heroku-buildpack-python.git --app $PROD_APP_NAME
 heroku config:set ENVIRONMENT=PRODUCTION --app $PROD_APP_NAME
 heroku config:set DJANGO_SECRET_KEY=`./manage.py generate_secret_key` --app $PROD_APP_NAME
+heroku addons:create papertrail:choklad --app $PROD_APP_NAME
 heroku addons:create heroku-postgresql:hobby-dev --app $PROD_APP_NAME
 heroku plugins:install heroku-pipelines
 heroku pipelines:create $PIPELINE_NAME --app $PROD_APP_NAME --stage production
@@ -69,13 +71,18 @@ echo "Writing new README.md"
 echo "# testproject" > README.md
 echo "[![CircleCI](https://circleci.com/gh/codecentric-labs-zero/$PROJECT_NAME.svg?style=svg)](https://circleci.com/gh/codecentric-labs-zero/$PROJECT_NAME)" >> README.md
 echo "## Links" >> README.md
+echo "### Staging environment" >> README.md
+echo "* [Web application](https://$APP_NAME.herokuapp.com/web)" >> README.md
+echo "* [API](https://$APP_NAME.herokuapp.com/api/hello_world)" >> README.md
+echo "* [Admin UI](https://$APP_NAME.herokuapp.com/admin)" >> README.md
+echo "### Production environment" >> README.md
+echo "* [Web application)](https://$PROD_APP_NAME.herokuapp.com/web)" >> README.md
+echo "* [API](https://$PROD_APP_NAME.herokuapp.com/api/hello_world)" >> README.md
+echo "* [Admin UI](https://$PROD_APP_NAME.herokuapp.com/admin)" >> README.md
+echo "### Monitoring" >> README.md
 echo "* [Heroku Dashboard](https://dashboard.heroku.com/apps/$APP_NAME)" >> README.md
-echo "* [Staging environment (web application)](https://$APP_NAME.herokuapp.com/web)" >> README.md
-echo "* [Staging environment (API)](https://$APP_NAME.herokuapp.com/api/hello_world)" >> README.md
-echo "* [Staging environment (admin UI)](https://$APP_NAME.herokuapp.com/admin)" >> README.md
-echo "* [Production environment (web application)](https://$PROD_APP_NAME.herokuapp.com/web)" >> README.md
-echo "* [Production environment (API)](https://$PROD_APP_NAME.herokuapp.com/api/hello_world)" >> README.md
-echo "* [Production environment (admin UI)](https://$PROD_APP_NAME.herokuapp.com/admin)" >> README.md
+echo "* [Papertrail Event Dashboard (staging)](https://papertrailapp.com/systems/$APP_NAME/events)" >> README.me
+echo "* [Papertrail Event Dashboard (production)](https://papertrailapp.com/systems/$PROD_APP_NAME/events)" >> README.me
 echo "Removing bootstrap.sh"
 rm bootstrap.sh >/dev/null
 echo "Pushing initial project setup"

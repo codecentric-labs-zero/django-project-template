@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import sys
 from configurations import Configuration, values
 
 class Common(Configuration):
@@ -26,6 +27,7 @@ class Common(Configuration):
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'django_extensions',
+        'waffle',
         '{{ project_name }}_api',
         '{{ project_name }}_web'
     ]
@@ -39,7 +41,25 @@ class Common(Configuration):
         'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'waffle.middleware.WaffleMiddleware'
     ]
+
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "level": "INFO",
+                "class": "logging.StreamHandler",
+                "stream": sys.stdout
+            },
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["console"],
+            }
+        }
+    }
 
     ROOT_URLCONF = '{{ project_name}}.urls'
 
@@ -109,9 +129,26 @@ class Common(Configuration):
 
     STATICFILE_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+
 class Development(Common):
     DEBUG = True
     ALLOWED_HOSTS = []
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "console": {
+                "level": "DEBUG",
+                "class": "logging.StreamHandler",
+                "stream": sys.stdout
+            },
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["console"],
+            }
+        }
+    }
 
 class Staging(Common):
     ALLOWED_HOSTS = ['cclz-{{ project_name }}.herokuapp.com']
