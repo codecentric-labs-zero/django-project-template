@@ -14,3 +14,4 @@ whitenoise==3.2
 django-configurations==1.0.0
 django-dotenv==1.4.1
 django-extensions==1.7.2
+django-waffle==0.11.1
