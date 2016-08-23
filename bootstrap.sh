@@ -83,8 +83,8 @@ echo "* [API](https://$PROD_APP_NAME.herokuapp.com/api/hello_world)" >> README.m
 echo "* [Admin UI](https://$PROD_APP_NAME.herokuapp.com/admin)" >> README.md
 echo "### Monitoring" >> README.md
 echo "* [Heroku Dashboard](https://dashboard.heroku.com/apps/$APP_NAME)" >> README.md
-echo "* [Papertrail Event Dashboard (staging)](https://papertrailapp.com/systems/$APP_NAME/events)" >> README.me
-echo "* [Papertrail Event Dashboard (production)](https://papertrailapp.com/systems/$PROD_APP_NAME/events)" >> README.me
+echo "* [Papertrail Event Dashboard (staging)](https://papertrailapp.com/systems/$APP_NAME/events)" >> README.md
+echo "* [Papertrail Event Dashboard (production)](https://papertrailapp.com/systems/$PROD_APP_NAME/events)" >> README.md
 echo "Removing bootstrap.sh"
 rm bootstrap.sh >/dev/null
 echo "Pushing initial project setup"
