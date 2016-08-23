@@ -18,9 +18,11 @@ if [ ! -d .git ]; then
   echo "Initializing git repository"
   git init
 fi
-Echo "Fixing file permissions"
+echo "=== Fixing file permissions ==="
 chmod u+x manage.py >/dev/null 2>&1
 chmod u+x merge-base-ff.sh >/dev/null 2>&1
+echo "=== Installing dependencies ==="
+pip install -r requirements.txt
 PROJECT_NAME={{ project_name | lower }}
 APP_NAME=cclz-{{ project_name | lower }}
 PROD_APP_NAME="$APP_NAME-prod"
