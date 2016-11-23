@@ -6,7 +6,7 @@ environment and use its django-admin.py:
 ```
 $ virtualenv --python=python3 venv
 $ . venv/bin/activate
-$ pip install pip install Django==1.10
+$ pip install Django==1.10
 $ venv/bin/django-admin startproject [project_name] \
   --template https://github.com/codecentric-labs-zero/django-project-template/archive/master.zip \
   --name .flooignore,.gitignore,Procfile,.env \
