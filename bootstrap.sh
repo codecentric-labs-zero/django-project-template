@@ -34,6 +34,8 @@ heroku config:set ENVIRONMENT=STAGING --app $APP_NAME
 heroku config:set DJANGO_SECRET_KEY=`./manage.py generate_secret_key` --app $APP_NAME
 heroku addons:create papertrail:choklad --app $APP_NAME
 heroku addons:create heroku-postgresql:hobby-dev --app $APP_NAME
+heroku addons:create newrelic:wayne --app $APP_NAME
+heroku config:set NEW_RELIC_APP_NAME="$APP_NAME"
 heroku pg:wait --app $APP_NAME
 heroku create $PROD_APP_NAME --org codecentric-labs-zero --remote staging --region eu
 heroku buildpacks:add https://github.com/heroku/heroku-buildpack-python.git --app $PROD_APP_NAME
@@ -41,6 +43,8 @@ heroku config:set ENVIRONMENT=PRODUCTION --app $PROD_APP_NAME
 heroku config:set DJANGO_SECRET_KEY=`./manage.py generate_secret_key` --app $PROD_APP_NAME
 heroku addons:create papertrail:choklad --app $PROD_APP_NAME
 heroku addons:create heroku-postgresql:hobby-dev --app $PROD_APP_NAME
+heroku addons:create newrelic:wayne --app $PROD_APP_NAME
+heroku config:set NEW_RELIC_APP_NAME="$PROD_APP_NAME"
 heroku plugins:install heroku-pipelines
 heroku pipelines:create $PIPELINE_NAME --app $PROD_APP_NAME --stage production
 heroku pipelines:add $PIPELINE_NAME --app $APP_NAME --stage staging
