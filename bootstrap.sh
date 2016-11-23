@@ -74,7 +74,7 @@ read -p "Press [Enter] when you have completed this step."
 echo "Adding origin remote to local repository"
 git remote add origin git@github.com:codecentric-labs-zero/$PROJECT_NAME.git >/dev/null
 echo "Writing new README.md"
-echo "# testproject" > README.md
+echo "# $PROJECT_NAME" > README.md
 echo "[![CircleCI](https://circleci.com/gh/codecentric-labs-zero/$PROJECT_NAME.svg?style=svg)](https://circleci.com/gh/codecentric-labs-zero/$PROJECT_NAME)" >> README.md
 echo "## Links" >> README.md
 echo "### Staging environment" >> README.md
