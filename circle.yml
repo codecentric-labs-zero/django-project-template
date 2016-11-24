@@ -1,6 +1,8 @@
 machine:
   python:
     version: 3.5.0
+  environment:
+    SELENIUM_URI: http://127.0.0.1:4444/wd/hub
 
 test:
   override:
@@ -35,3 +37,10 @@ deployment:
       - git push git@heroku.com:cclz-{{ project_name | lower }}.git $CIRCLE_SHA1:refs/heads/master
       - heroku pg:backups capture --app cclz-{{ project_name | lower }}
       - heroku run --app cclz-{{ project_name | lower }} python manage.py migrate --no-input
+
+dependencies:
+   post:
+        # Install Selenium.
+      - curl https://selenium-release.storage.googleapis.com/3.0/selenium-server-standalone-3.0.1.jar > selenium-server-standalone.jar
+      - 'java -jar -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver selenium-server-standalone.jar':
+              background: true
