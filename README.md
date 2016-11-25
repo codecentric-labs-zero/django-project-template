@@ -31,6 +31,15 @@ $ ./bootstrap.sh
 Please note that this can only be done once and that you'll need to be part
 of the codecentric-labs-zero organizations on Heroku and GitHub for this to work.
 
+Also, you need to use a GitHub token with the following permissions:
+
+* **repo**
+* **admin:org**
+* **admin:repo_hook**
+* **admin:public_key**
+
+Make sure that you can access GitHub repositories [via ssh](https://help.github.com/articles/generating-an-ssh-key/).
+
 If you prefer not to set up the delivery pipeline, you can simply prepare the
 project for development:
 
