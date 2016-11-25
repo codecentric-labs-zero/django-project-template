@@ -34,9 +34,11 @@ deployment:
   staging:
     branch: master
     commands:
+      - heroku maintenance:on --app cclz-{{ project_name | lower }}
       - git push git@heroku.com:cclz-{{ project_name | lower }}.git $CIRCLE_SHA1:refs/heads/master
       - heroku pg:backups capture --app cclz-{{ project_name | lower }}
       - heroku run --app cclz-{{ project_name | lower }} python manage.py migrate --no-input
+      - heroku maintenance:off --app cclz-{{ project_name | lower }}
 
 dependencies:
    post:
