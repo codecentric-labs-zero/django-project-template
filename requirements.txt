@@ -1,6 +1,6 @@
 colorama==0.3.7
 dj-database-url==0.4.1
-Django==1.10
+Django==1.11
 gunicorn==19.6.0
 Markdown==2.6.6
 psycopg2==2.6.1
