@@ -8,7 +8,7 @@ $ virtualenv --python=python3 venv
 $ . venv/bin/activate
 $ pip install Django==1.11
 $ venv/bin/django-admin startproject [project_name] \
-  --template https://github.com/codecentric-labs-zero/django-project-template/archive/master.zip \
+  --template https://github.com/codecentric-labs-zero/django-project-template/archive/private.zip \
   --name .flooignore,.gitignore,Procfile,.env \
   --extension py,md,txt,sh,ini,yml
 ```
@@ -29,7 +29,7 @@ $ ./bootstrap.sh
 ```
 
 Please note that this can only be done once and that you'll need to be part
-of the codecentric-labs-zero organizations on Heroku and GitHub for this to work.
+of the codecentric organization on Heroku and GitHub for this to work.
 
 Also, you need to use a GitHub token with the following permissions:
 
